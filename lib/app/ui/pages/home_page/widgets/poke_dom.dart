@@ -1,5 +1,8 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_rx/src/rx_typedefs/rx_typedefs.dart';
+import 'package:get/get.dart';
+import 'package:pokedex/app/controllers/home_controller.dart';
+import 'package:pokedex/app/controllers/theme_controller.dart';
 import 'package:pokedex/app/data/models/pokemon_model.dart';
 import 'package:pokedex/app/ui/utils/media_query.dart';
 import 'package:pokedex/app/ui/utils/pokemon_colors.dart';
@@ -7,27 +10,22 @@ import 'package:pokedex/app/ui/utils/style_of_text.dart';
 
 class PokeDom extends StatelessWidget {
 
-  final Callback callbackOfPokemonSprite;
-  final Callback callbackOfNamePokemon;
-  final Color shadowPokemonColor;
-  final Color conatinerColor;
+  final ThemeController themeController;
+  final HomeController controller;
   final Pokemon pokemon;
-  final Widget imagen;
+  final VoidCallback callback;
 
-  const PokeDom({
+  PokeDom({
     Key? key, 
-    required this.callbackOfPokemonSprite, 
-    required this.shadowPokemonColor, 
+    required this.controller,
+    required this.themeController,
     required this.pokemon, 
-    required this.imagen, 
-    required this.conatinerColor, 
-    required this.callbackOfNamePokemon,
+    required this.callback, 
   }) : super(key: key);
-
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return Obx(()=>Padding(
       padding: const EdgeInsets.only(top: 20),
       child: Container(
         width: displayWidth(context),
@@ -39,7 +37,7 @@ class PokeDom extends StatelessWidget {
               end: Alignment.bottomCenter,
               colors: [
                 typeColorOfPokemon[pokemon.types[0].type.name],
-                conatinerColor,
+                themeController.isDarkMode.value ? Colors.white : Colors.grey.shade900,
               ],
             ),
           boxShadow: [
@@ -64,7 +62,7 @@ class PokeDom extends StatelessWidget {
                   padding: const EdgeInsets.all(8.0),
                   child: Container(
                     decoration: BoxDecoration(
-                      color: conatinerColor,
+                      color: themeController.isDarkMode.value ? Colors.white : Colors.grey.shade900,
                       borderRadius: BorderRadius.circular(30),
                       boxShadow: [
                         BoxShadow(
@@ -82,7 +80,7 @@ class PokeDom extends StatelessWidget {
                         Row(
                           children: [
                             GestureDetector(
-                              onTap: callbackOfPokemonSprite,
+                              onTap:callback,
                               child: Stack(
                                 alignment: AlignmentDirectional.center,
                                 children: [
@@ -96,7 +94,7 @@ class PokeDom extends StatelessWidget {
                                         decoration: BoxDecoration(
                                           boxShadow: [
                                             BoxShadow(
-                                              color: shadowPokemonColor,
+                                              color: themeController.isDarkMode.value ? Colors.grey.shade900.withOpacity(0.6) : Colors.white.withOpacity(0.6),
                                               blurRadius: 15,
                                               offset: const Offset(0,0)
                                             ),
@@ -106,7 +104,11 @@ class PokeDom extends StatelessWidget {
                                       ),
                                     ],
                                   ),
-                                  imagen
+                                  SizedBox(
+                                    width: displayWidth(context)*0.45,
+                                    height: displayHeight(context)*0.2,
+                                    child: Image.network(controller.randomPokemon!.sprites.frontDefault, fit: BoxFit.cover)
+                                  )
                                 ],
                               )
                             ),
@@ -134,7 +136,7 @@ class PokeDom extends StatelessWidget {
                     height: 60,
                     width: displayWidth(context),
                     decoration: BoxDecoration(
-                      color: conatinerColor,
+                      color: themeController.isDarkMode.value ? Colors.white : Colors.grey.shade900,
                       borderRadius: BorderRadius.circular(30),
                       boxShadow: [
                         BoxShadow(
@@ -145,7 +147,7 @@ class PokeDom extends StatelessWidget {
                       ]
                     ),
                     child: GestureDetector(
-                      onTap: callbackOfNamePokemon,
+                      onTap:  () => controller.navigateToInfoPokemon(),
                       child: Text(pokemon.name ,style: pokemonNae,textAlign: TextAlign.center)
                     ),
                   ),
@@ -160,6 +162,6 @@ class PokeDom extends StatelessWidget {
           ],
         ),
       ),
-    );
+    ));
   }
 }

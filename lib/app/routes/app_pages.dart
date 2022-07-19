@@ -25,7 +25,7 @@ abstract class AppPages {
     ),
     GetPage(
       name: Routes.INFOPOKEMON, 
-      page:()=> const InfoPokemonPage(),
+      page:()=> InfoPokemonPage(),
       transition: Transition.circularReveal,
       curve: Curves.elasticIn,
       binding: InfoPokemonBinding()

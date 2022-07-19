@@ -10,12 +10,14 @@ class HomeController extends GetxController with StateMixin{
   HomeController(){
     getPokemon();
     getRandomPokemon();
+    get100Pokemons();
   }
 
   final apiPokeon = Get.find<ApiPokemon>();
 
   Pokemon? pokemon;
   Pokemon? randomPokemon;
+  List<Pokemon> pokemons = [];
   
   getPokemon() async {
     pokemon = await apiPokeon.getPokemon();
@@ -33,8 +35,9 @@ class HomeController extends GetxController with StateMixin{
   }
 
   getPokemonByNameOrId(String name) async {
+    String formatName = name.toLowerCase().replaceAll(' ', '');
     try {
-      Pokemon pokemon = await apiPokeon.getPokemonByNameOrId(name);
+      Pokemon pokemon = await apiPokeon.getPokemonByNameOrId(formatName);
       Get.toNamed(Routes.INFOPOKEMON,arguments: pokemon.id);
     } catch (e) {
       Get.defaultDialog(
@@ -54,9 +57,21 @@ but have a magikarp''', textAlign: TextAlign.center,style:subTitle)
       );
     }
   }
-    
+
+  get100Pokemons() async {
+    try {
+      for (var idPokemon = 1; idPokemon < 100; idPokemon++) {
+        Pokemon pokemon = await apiPokeon.getRandomPokemonById(idPokemon);
+        pokemons.add(pokemon);
+      }
+      print(pokemons.length);
+    } catch (e) {
+      print(e);
+    }
+  }
+
   navigateToPokedex(){
-    Get.toNamed(Routes.POKEDEX);
+    Get.toNamed(Routes.POKEDEX, arguments: pokemons);
   }
   navigateToInfoPokemon(){
     Get.toNamed(Routes.INFOPOKEMON, arguments: randomPokemon!.id);
