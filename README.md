@@ -8,6 +8,8 @@ para el consumo de datos se utilizó POKE API 🦍
 - [Poke API](https://pokeapi.co/)
 
 #### es una versión de la app muy temprana pero funcional.✨✨✨
+# Descarga la APP
+![img1](https://raw.githubusercontent.com/ChayALV/PokeDexApp/master/screeshots/qr-acode.png)
 ## Capturas de pantalla
 #### POKEDEX
 ![img1](https://raw.githubusercontent.com/ChayALV/PokeDexApp/master/screeshots/Screenshot_20220719_172525.jpg)
