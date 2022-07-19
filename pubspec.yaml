@@ -38,6 +38,12 @@ dependencies:
   animate_do: ^2.1.0
   loading_animation_widget: ^1.2.0+2
   multi_charts: ^0.3.0
+  flutter_launcher_icons: ^0.9.3
+
+flutter_icons:
+  image_path: "assets/images/kindpng_159383.png"
+  android: true
+  ios: true
 
 dev_dependencies:
   flutter_test:
