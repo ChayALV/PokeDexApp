@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -18,86 +20,68 @@ class HomePage extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
-      floatingActionButton: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          const SizedBox(height: 20,),
-          GetBuilder<ThemeController>(
-            builder: ((controller) => FloatingActionButton(
-                onPressed: () => controller.changeTheme(),
-                child: const Icon(Icons.change_circle_outlined),
-              )
-            ),
-          ),
-        ],
-      ),
-      body: SafeArea(
-        child: GetBuilder<HomeController>(
+        resizeToAvoidBottomInset: false,
+        body: SafeArea(
+          child: GetBuilder<HomeController>(
             builder: ((controller) => Stack(
-                children: [
-                  Obx(
-                    ()=> BackgroundImage(
-                      backgroundColor: themeController.isDarkMode.value 
-                        ? Colors.white.withOpacity(0.7) 
-                        : Colors.black.withOpacity(0.7)
-                      ),
-                  ),
-                  Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(15),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
+                  children: [
+                    const BackgroundImage(),
+                    Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(15),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              //? Title
+                              const TitleApp(),
 
-                            //? Title
-                            const TitleApp(),
-
-                            //?Search bar
-                            SearchBar(themeController: themeController, controller: controller,),
-                            
-                            //?Taps menu
-                            SecctionTab(
-                              titleOfButtom: 'Pokedex',
-                              function : () => controller.navigateToPokedex(), 
-                              colorOfButtom: Colors.lightBlueAccent.shade400, 
-                              colorOfShadowButtom: Colors.lightBlueAccent.shade700,
-                            ),
-
-                            //?PokeDom
-                            controller.obx(
-
-                              (data) => FadeIn(
-                                duration: const Duration(milliseconds: 3000),
-                                controller: (animationController) => controllerAnimationContainer = animationController,
-                                child: PokeDom(controller:controller, themeController: themeController,pokemon: controller.randomPokemon!, 
-                                  callback: () {  controllerAnimationContainer
-                                  ..reset()
-                                  ..forward();
-                                  controller.getRandomPokemon();  
-                                },),
+                              //?Search bar
+                              SearchBar(
+                                themeController: themeController,
+                                controller: controller,
                               ),
 
-                              onLoading: LoadingAnimation(themeController: themeController),
+                              //?Taps menu
+                              SecctionTab(
+                                titleOfButtom: 'Pokedex',
+                                function: () => controller.navigateToPokedex(),
+                                colorOfButtom: Colors.lightBlueAccent.shade400,
+                                colorOfShadowButtom:
+                                    Colors.lightBlueAccent.shade700,
+                              ),
 
-                              onError: (error) => Text(error.toString())
-
-                            )
-                          ],
+                              //?PokeDom
+                              controller.obx(
+                                (data) => FadeIn(
+                                      duration:
+                                          const Duration(milliseconds: 3000),
+                                      controller: (animationController) =>
+                                          controllerAnimationContainer =
+                                              animationController,
+                                      child: PokeDom(
+                                        controller: controller,
+                                        themeController: themeController,
+                                        pokemon: controller.randomPokemon!,
+                                        callback: () {
+                                          controllerAnimationContainer
+                                            ..reset()
+                                            ..forward();
+                                          controller.getRandomPokemon();
+                                        },
+                                      ),
+                                    ),
+                                onLoading: LoadingAnimation(
+                                    themeController: themeController),
+                                onError: (error) => Text(error.toString(),style: const TextStyle(fontSize: 30),))
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                ],
-              )
+                      ],
+                    ),
+                  ],
+                )),
           ),
-        ),
-      )
-    );
+        ));
   }
 }
-
-
-
-

@@ -1,17 +1,14 @@
 
 import 'package:flutter/material.dart';
 import 'package:pokedex/app/controllers/info_pokeom_controller.dart';
-import 'package:pokedex/app/controllers/theme_controller.dart';
 import 'package:pokedex/app/ui/utils/pokemon_colors.dart';
 
-class BackgroundPokemon extends StatelessWidget {
-  const BackgroundPokemon({
+class IconPokemon extends StatelessWidget {
+  const IconPokemon({
     Key? key,
-    required this.themeController, 
     required this.controller,
   }) : super(key: key);
 
-  final ThemeController themeController;
   final InfoPokemonController controller;
 
   @override
@@ -20,18 +17,14 @@ class BackgroundPokemon extends StatelessWidget {
       width: 100,
       height: 100,
       decoration: BoxDecoration(
-        border: Border.all(color:  themeController.isDarkMode.value 
-                ? Colors.white 
-                : Colors.black
+        border: Border.all(color: Theme.of(context).scaffoldBackgroundColor
                 ,width: 5),
         gradient: LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
           colors: [
             typeColorOfPokemon[controller.pokemon!.types[0].type.name],
-            themeController.isDarkMode.value 
-              ? Colors.white 
-              : Colors.black,
+            Theme.of(context).scaffoldBackgroundColor,
           ],
         ),
         shape: BoxShape.circle

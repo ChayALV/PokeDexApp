@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:pokedex/app/ui/utils/media_query.dart';
+import 'package:pokedex/app/ui/utils/utilits.dart';
 
 class BackgroundImage extends StatelessWidget {
-  final Color backgroundColor;
+  final Color? backgroun;
   const BackgroundImage({
-    Key? key, 
-    required this.backgroundColor
+    Key? key, this.backgroun, 
   }) : super(key: key);
 
   @override
@@ -18,7 +17,7 @@ class BackgroundImage extends StatelessWidget {
           child: Image.asset('assets/images/19778.png',fit: BoxFit.cover,)
         ),
         Container(
-          color: backgroundColor,
+          color: backgroun ?? Theme.of(context).scaffoldBackgroundColor.withOpacity(0.7),
           width: displayWidth(context),
           height: displayHeight(context),
         )

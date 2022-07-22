@@ -9,7 +9,6 @@ class PokedexController extends GetxController {
   List<Pokemon> pokemons = [];
   setListPokemons(List<Pokemon> pokemons){
     this.pokemons = pokemons;
-    print(this.pokemons.length);
   }
   navigateToInfoPokemons(int indexOfListPokemons){
     Get.toNamed(Routes.INFOPOKEMON, arguments: pokemons[indexOfListPokemons].id);

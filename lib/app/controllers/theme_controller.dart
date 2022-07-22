@@ -1,22 +1,32 @@
-import 'dart:developer';
-
 import 'package:get/get.dart';
 import 'package:pokedex/app/ui/theme/themes.dart';
-
 class ThemeController extends GetxController {
-  ThemeController(){
-    log('CONTROLADOR DE THEMAS INICIADO');
-  }
   final isDarkMode = true.obs;
-  changeTheme(){
+ 
+  getAndChangeTheme(){
     Get.changeTheme(
       Get.isDarkMode 
-        ? Themes().themeLight 
-        : Themes().themeDark 
+        ?  Themes().themeDark 
+        :  Themes().themeLight 
     );
+    colorsOfTheme();
+    print(Get.theme.cardColor);
+    print(Get.theme.colorScheme.background);
+    print(Get.theme.colorScheme.onPrimaryContainer);
+    print(Get.theme.colorScheme.primary);
+    print(Get.theme.colorScheme.onBackground);
+    print(Get.theme.colorScheme.onPrimaryContainer);
+    print(Get.theme.colorScheme.onPrimary);
+    print(Get.theme.colorScheme.onPrimary);
+  }
+  colorsOfTheme(){
     Get.isDarkMode 
       ? isDarkMode.value = true
       : isDarkMode.value = false
     ;
+
+  }
+  bool containerColor(){
+    return Get.isDarkMode ? true : false;
   }
 }

@@ -7,8 +7,8 @@ import 'package:pokedex/app/ui/global_widgets/background_image.dart';
 import 'package:pokedex/app/ui/pages/home_page/widgets/loading_animation.dart';
 import 'package:pokedex/app/ui/pages/info_pokemon_page/widgets/backgroup_pokemon.dart';
 import 'package:pokedex/app/ui/pages/info_pokemon_page/widgets/information_of_pokemon.dart';
-import 'package:pokedex/app/ui/utils/media_query.dart';
 import 'package:pokedex/app/ui/utils/pokemon_colors.dart';
+import 'package:pokedex/app/ui/utils/utilits.dart';
 
 
 class InfoPokemonPage extends GetView<InfoPokemonController> {
@@ -29,7 +29,7 @@ class InfoPokemonPage extends GetView<InfoPokemonController> {
               children: [
                 controller.obx(
                   (data) => BackgroundImage(
-                    backgroundColor: typeColorOfPokemon[controller.pokemon!.types[0].type.name].withOpacity(0.7),
+                    backgroun: typeColorOfPokemon[controller.pokemon!.types[0].type.name].withOpacity(0.7),
                   ),
                   onLoading: Container()
                 ),
@@ -54,8 +54,8 @@ class InfoPokemonPage extends GetView<InfoPokemonController> {
                             child: Stack(
                               alignment: AlignmentDirectional.topCenter,
                               children: [
-                                InformationOfPokemon(themeController: themeController, controller: controller,),
-                                BackgroundPokemon(themeController: themeController, controller: controller,),
+                                SectionInformationOfPokemon(controller: controller,),
+                                IconPokemon(controller: controller,),
                               ],
                             ),
                           ),

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+String urlBaseOfPokeAPI = 'pokeapi.co';
+
 const title = TextStyle(
   fontFamily: 'Poppins',
   fontSize:35,

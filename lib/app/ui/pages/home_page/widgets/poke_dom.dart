@@ -1,10 +1,9 @@
-import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pokedex/app/controllers/home_controller.dart';
 import 'package:pokedex/app/controllers/theme_controller.dart';
 import 'package:pokedex/app/data/models/pokemon_model.dart';
-import 'package:pokedex/app/ui/utils/media_query.dart';
+import 'package:pokedex/app/ui/utils/utilits.dart';
 import 'package:pokedex/app/ui/utils/pokemon_colors.dart';
 import 'package:pokedex/app/ui/utils/style_of_text.dart';
 
@@ -15,7 +14,7 @@ class PokeDom extends StatelessWidget {
   final Pokemon pokemon;
   final VoidCallback callback;
 
-  PokeDom({
+  const PokeDom({
     Key? key, 
     required this.controller,
     required this.themeController,
@@ -25,7 +24,7 @@ class PokeDom extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(()=>Padding(
+    return Padding(
       padding: const EdgeInsets.only(top: 20),
       child: Container(
         width: displayWidth(context),
@@ -37,7 +36,7 @@ class PokeDom extends StatelessWidget {
               end: Alignment.bottomCenter,
               colors: [
                 typeColorOfPokemon[pokemon.types[0].type.name],
-                themeController.isDarkMode.value ? Colors.white : Colors.grey.shade900,
+                Theme.of(context).scaffoldBackgroundColor
               ],
             ),
           boxShadow: [
@@ -62,7 +61,7 @@ class PokeDom extends StatelessWidget {
                   padding: const EdgeInsets.all(8.0),
                   child: Container(
                     decoration: BoxDecoration(
-                      color: themeController.isDarkMode.value ? Colors.white : Colors.grey.shade900,
+                      color: Theme.of(context).scaffoldBackgroundColor,
                       borderRadius: BorderRadius.circular(30),
                       boxShadow: [
                         BoxShadow(
@@ -94,7 +93,7 @@ class PokeDom extends StatelessWidget {
                                         decoration: BoxDecoration(
                                           boxShadow: [
                                             BoxShadow(
-                                              color: themeController.isDarkMode.value ? Colors.grey.shade900.withOpacity(0.6) : Colors.white.withOpacity(0.6),
+                                              color: MediaQuery.of(context).platformBrightness == Brightness.dark ? Colors.white.withOpacity(0.6) : Colors.grey.shade900.withOpacity(0.6),
                                               blurRadius: 15,
                                               offset: const Offset(0,0)
                                             ),
@@ -136,7 +135,7 @@ class PokeDom extends StatelessWidget {
                     height: 60,
                     width: displayWidth(context),
                     decoration: BoxDecoration(
-                      color: themeController.isDarkMode.value ? Colors.white : Colors.grey.shade900,
+                      color: Theme.of(context).scaffoldBackgroundColor,
                       borderRadius: BorderRadius.circular(30),
                       boxShadow: [
                         BoxShadow(
@@ -162,6 +161,6 @@ class PokeDom extends StatelessWidget {
           ],
         ),
       ),
-    ));
+    );
   }
 }

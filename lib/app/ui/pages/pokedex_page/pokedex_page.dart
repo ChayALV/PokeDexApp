@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:pokedex/app/controllers/pokedex_controller.dart';
 import 'package:pokedex/app/controllers/theme_controller.dart';
 import 'package:pokedex/app/ui/global_widgets/background_image.dart';
-import 'package:pokedex/app/ui/utils/media_query.dart';
+import 'package:pokedex/app/ui/utils/utilits.dart';
 import 'package:pokedex/app/ui/utils/pokemon_colors.dart';
 import 'package:pokedex/app/ui/utils/style_of_text.dart';
 
@@ -20,11 +20,7 @@ class PokedexPage extends GetView<PokedexController> {
       body: SafeArea(
         child: Stack(
           children: [
-            BackgroundImage(
-               backgroundColor: themeController.isDarkMode.value 
-                ? Colors.white.withOpacity(0.7) 
-                : Colors.black.withOpacity(0.7)
-            ),
+            const BackgroundImage(),
             GetBuilder<PokedexController>(
               builder: (controller) => 
                 Column(
@@ -35,6 +31,7 @@ class PokedexPage extends GetView<PokedexController> {
                       width: displayWidth(context),
                       height: displayHeight(context)*0.85,
                       child: GridView.count(
+                      key: const PageStorageKey<String>('pokedex'),
                       crossAxisCount: 3,
                       children: List.generate(controller.pokemons.length, (index) {
                         return FadeIn(
@@ -61,9 +58,7 @@ class PokedexPage extends GetView<PokedexController> {
                                             end: Alignment.bottomCenter,
                                             colors: [
                                               typeColorOfPokemon[controller.pokemons[index].types[0].type.name],
-                                              themeController.isDarkMode.value 
-                                                ? Colors.white.withOpacity(0.7) 
-                                                : Colors.black.withOpacity(0.7),
+                                              Theme.of(context).scaffoldBackgroundColor,
                                             ],
                                           ),
                                         ),

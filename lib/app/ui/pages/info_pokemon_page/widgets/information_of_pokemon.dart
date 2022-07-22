@@ -2,19 +2,16 @@
 import 'package:flutter/material.dart';
 import 'package:multi_charts/multi_charts.dart';
 import 'package:pokedex/app/controllers/info_pokeom_controller.dart';
-import 'package:pokedex/app/controllers/theme_controller.dart';
-import 'package:pokedex/app/ui/utils/media_query.dart';
+import 'package:pokedex/app/ui/utils/utilits.dart';
 import 'package:pokedex/app/ui/utils/pokemon_colors.dart';
 import 'package:pokedex/app/ui/utils/style_of_text.dart';
 
-class InformationOfPokemon extends StatelessWidget {
-  const InformationOfPokemon({
+class SectionInformationOfPokemon extends StatelessWidget {
+  const SectionInformationOfPokemon({
     Key? key,
-    required this.themeController, 
     required this.controller,
   }) : super(key: key);
 
-  final ThemeController themeController;
   final InfoPokemonController controller;
 
   @override
@@ -28,9 +25,7 @@ class InformationOfPokemon extends StatelessWidget {
             width: displayWidth(context),
             height: displayHeight(context)*0.6,
             decoration: BoxDecoration(
-              color:  themeController.isDarkMode.value 
-                ? Colors.white.withOpacity(0.85) 
-                : Colors.black.withOpacity(0.85),
+              color:  Theme.of(context).scaffoldBackgroundColor,
               borderRadius: BorderRadius.circular(30)
             ),
             child: Column(
@@ -40,7 +35,7 @@ class InformationOfPokemon extends StatelessWidget {
                     children: [
                       RadarChart(
                         labelColor: typeColorOfPokemon[controller.pokemon!.types[0].type.name],
-                        strokeColor:  themeController.isDarkMode.value 
+                        strokeColor:  MediaQuery.of(context).platformBrightness != Brightness.dark 
                           ? Colors.black
                           : Colors.white, 
                         values: controller.stats,

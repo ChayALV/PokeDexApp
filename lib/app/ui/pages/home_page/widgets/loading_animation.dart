@@ -20,7 +20,7 @@ class LoadingAnimation extends StatelessWidget {
         children: [
           const SizedBox(height: 50,),
           LoadingAnimationWidget.staggeredDotsWave(
-            color:  themeController.isDarkMode.value ? Colors.black.withOpacity(0.5) : Colors.white.withOpacity(0.5), 
+            color:   MediaQuery.of(context).platformBrightness != Brightness.dark  ? Colors.black.withOpacity(0.5) : Colors.white.withOpacity(0.5), 
             size: 150
           ),
         ],

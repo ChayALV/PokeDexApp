@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pokedex/app/ui/utils/media_query.dart';
+import 'package:pokedex/app/ui/utils/utilits.dart';
 import 'package:pokedex/app/ui/utils/style_of_text.dart';
 
 class SecctionTab extends StatelessWidget {

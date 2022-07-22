@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pokedex/app/controllers/theme_controller.dart';
 import 'package:pokedex/app/data/models/pokemon_model.dart';
 import 'package:pokedex/app/data/provider/pokemon_provider.dart';
 import 'package:pokedex/app/routes/app_pages.dart';
@@ -8,19 +9,19 @@ import 'package:pokedex/app/ui/utils/style_of_text.dart';
 
 class HomeController extends GetxController with StateMixin{
   HomeController(){
-    getPokemon();
     getRandomPokemon();
     get100Pokemons();
+    getTheme();
   }
 
   final apiPokeon = Get.find<ApiPokemon>();
+  final themeController = Get.find<ThemeController>();
 
-  Pokemon? pokemon;
   Pokemon? randomPokemon;
   List<Pokemon> pokemons = [];
-  
-  getPokemon() async {
-    pokemon = await apiPokeon.getPokemon();
+
+  getTheme(){
+    themeController.colorsOfTheme();
   }
 
   getRandomPokemon() async {
@@ -30,13 +31,13 @@ class HomeController extends GetxController with StateMixin{
       randomPokemon = await apiPokeon.getRandomPokemonById(randomId);
       change(null, status: RxStatus.success());
     } catch (e) {
-      getRandomPokemon();
+      change(null, status: RxStatus.error());
     }
   }
 
   getPokemonByNameOrId(String name) async {
-    String formatName = name.toLowerCase().replaceAll(' ', '');
     try {
+      String formatName = name.toLowerCase().replaceAll(' ', '');
       Pokemon pokemon = await apiPokeon.getPokemonByNameOrId(formatName);
       Get.toNamed(Routes.INFOPOKEMON,arguments: pokemon.id);
     } catch (e) {
@@ -48,7 +49,7 @@ class HomeController extends GetxController with StateMixin{
             SizedBox(
               width: 150,
               height: 150,
-              child: Image.network(pokemon!.sprites.frontDefault, fit: BoxFit.cover)
+              child: Image.network('https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/129.png')
             ),
             const Text( '''This pokemon not exist,
 but have a magikarp''', textAlign: TextAlign.center,style:subTitle)
@@ -64,9 +65,8 @@ but have a magikarp''', textAlign: TextAlign.center,style:subTitle)
         Pokemon pokemon = await apiPokeon.getRandomPokemonById(idPokemon);
         pokemons.add(pokemon);
       }
-      print(pokemons.length);
     } catch (e) {
-      print(e);
+      return 0;
     }
   }
 
